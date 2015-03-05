@@ -18,6 +18,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import webapp.dao.DeptDao;
 import webapp.exception.DeptNotFoundException;
 import webapp.model.Dept;
 import webapp.model.Emp;
@@ -25,7 +26,7 @@ import webapp.service.DeptInfoService;
 import webapp.util.EmployeeDataSource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/webapp/resource/beans.xml")
+@ContextConfiguration("classpath:/webapp/spring/beans.xml")
 public class DeptInfoServiceTest {
 
 	static Logger log = Logger.getLogger(DeptInfoServiceTest.class);
@@ -63,6 +64,17 @@ public class DeptInfoServiceTest {
 			for (Emp e : emps) {
 				log.info(e.getEmpno() + " " + e.getEname());
 			}
+		}
+	}
+	
+	@Test
+	public void testGetDeptInfoAll() {
+		DeptInfoService service = factory.getBean(DeptInfoService.class);
+		List<Dept> list = service.getDeptInfoAll();
+		assertNotNull(list);
+		
+		for (Dept d : list) {
+			log.info(d.getDeptno() + " " + d.getDname() + " " + d.getLoc());
 		}
 	}
 }
